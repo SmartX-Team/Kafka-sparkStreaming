@@ -1,0 +1,74 @@
+install kafka
+sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove && sudo reboot
+sudo apt-get install default-jre
+wget httpmirror.apache-kr.orgkafka0.10.0.0kafka_2.11-0.10.0.0.tgz
+tar -zxvf kafka_2.11-0.10.0.0.tgz
+cd kafka_2.11-0.10.0.0
+
+
+sudo vim configserver.properties
+
+
+run zookeeper
+binzookeeper-server-start.sh configzookeeper.properties 
+
+run brocker
+sudo binkafka-server-start.sh configserver.properties 
+
+
+
+producer kafka benchmark
+
+
+
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic research2 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092 --throughput 100000
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic research2 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092,kafka-broker29092 --throughput 1000000
+
+
+kafka to spark streamming
+
+.binspark-submit --packages org.apache.sparkspark-streaming-kafka-0-8_2.112.0.2 examplessrcmainpythonstreamingkafka_wordcount.py kafka-zookeeper2181 newresearch3
+
+.binspark-submit --conf spark.streaming.blockInterval=200ms --conf spark.executor.memory=100g --packages org.apache.sparkspark-streaming-kafka-0-8_2.112.0.2 examplessrcmainpythonstreamingkafka_wordcount.py kafka-zookeeper2181 newresearch3
+
+
+
+
+
+binkafka-producer-perf-test.sh --broker-list=embian49092 --messages 20000000 --topic test --message-size 800 --threads 24 --batch-size 200 --compression-codec 0 --request-num-acks 0 --message-send-gap-ms 0 --hide-header
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic research3 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092,kafka-broker29092 --throughput 1000000
+
+
+
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic research3 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092 --throughput 1000000
+
+
+
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic research6 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092,kafka-broker29092,kafka-bo --throughput 1000000
+
+
+create topic
+binkafka-topics.sh --create --zookeeper kafka-zookeeper2181 --replication-factor 1 --partitions 4 --topic newreseach5
+
+
+
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic research8 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092,kafka-broker29092,jckwon-a29092 --throughput 2000000
+
+--num-records 100000000 --record-size 100 --topic research4 --producer-props acks=1 bootstrap.servers=kafka-broker09092,kafka-broker19092,kafka-broker29092,kafka-broker3 --throughput 2000000
+
+
+
+binkafka-producer-perf-test.sh --num-records 100000000 --record-size 100 --topic test10 --producer-props acks=0 bootstrap.servers=kafka-broker09092 buffer.memory=10485760 batch.size=9000 --throughput -1
+
+
+
+binkafka-producer-perf-test.sh --num-records 10000000 --record-size 100 --topic newresearch4 --producer-props acks=0 bootstrap.servers=kafka-broker19092 buffer.memory=1048570 batch.size=6000 --throughput -1
+
+
+
+.binspark-submit --conf spark.streaming.blockInterval=200ms --conf spark.executor.memory=100g --conf spark.app.name=100g --packages org.apache.sparkspark-streaming-kafka-0-8_2.112.0.2 examplessrcmainpythonstreamingkafka_wordcount.py kafka-zookeeper2181 newresearch4
+
+sudo binspark-submit --conf spark.streaming.blockInterval=500ms --driver-memory 20g --executor-memory 80g --driver-cores 80  --master mesos210.125.84.335050 --packages org.apache.sparkspark-streaming-kafka-0-8_2.112.0.2 examplessrcmainpythonstreamingdirect_kafka_wordcount.py kafka-broker09092,kafka-broker19092,kafka-broker29092 newresearch13
+
+
+
